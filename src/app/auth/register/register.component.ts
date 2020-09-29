@@ -1,32 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup,FormControl} from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import {AuthService} from './../services/auth.service';
+import { User } from '@app/shared/models/user.interface';
+import { AuthService } from './../services/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  providers :[AuthService],
+
 })
 export class RegisterComponent implements OnInit {
-  registerForm=new FormGroup({
+  registerForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private authSvc:AuthService, private router:Router) { }
+  constructor(private authSvc: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
-  async onRegister(){
-    const {email,password} = this.registerForm.value;
-    try{
-      const user = await this.authSvc.register(email,password);
-      if(user){
-        this.router.navigate(['/pagina']);
+  async onRegister() {
+    const { email, password } = this.registerForm.value;
+    try {
+      const user = await this.authSvc.register(email, password);
+      if (user) {
+        this.checkUserIsVerified(user);
       }
     }
-    catch(error){console.log(error);
+    catch (error) {
+      console.log(error);
+    }
+  }
+  private checkUserIsVerified(user: User) {
+    if (user && user.emailVerified) {
+
+      this.router.navigate(['/pagina']);
+    } else if (user) {
+      this.router.navigate(['/verification-email']);
+    } else {
+      this.router.navigate(['/register']);
     }
   }
 }

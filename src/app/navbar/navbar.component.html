@@ -13,6 +13,7 @@
           <a class="nav-link" [routerLink]="['/']">Features</a>
         </li>
       </ul>
+      <form class="form-inline my-2 my-lg-0">
       <ul class="navbar-nav mr-auto" *ngIf="user$ | async as user;else login">
         
         <li class="nav-item" *ngIf="user">
@@ -34,5 +35,6 @@
             </li>
           </ul>
         </ng-template>
+      </form>
     </div>
   </nav>
