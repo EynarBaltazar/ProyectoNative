@@ -16,7 +16,7 @@ export class CanEditGuard implements CanActivate {
       map((user) => user && this.authSvc.isEditor(user)),
       tap((canEdit) => {
         if(!canEdit){
-          window.alert('Acceso denegado , no tiene permiso autorisado de Editor');
+          window.alert('Acceso denegado , no tiene permiso autorisado Ingrese con su cuenta');
         }
       })
     );

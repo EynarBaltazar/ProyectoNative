@@ -38,6 +38,10 @@ const routes: Routes = [
   import('./suscriptor/suscriptor.module').then((m) => m.SuscriptorModule),
     canActivate: [CanSuscriptorGuard],
  },
+
+  { path: 'conta', loadChildren: () => import('./auth/conta/conta.module').then(m => m.ContaModule) },
+
+  { path: 'galeria', loadChildren: () => import('./auth/galeria/galeria.module').then(m => m.GaleriaModule) },
 ];
 
 @NgModule({
