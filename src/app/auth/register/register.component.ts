@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl,Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '@app/shared/models/user.interface';
 import { AuthService } from './../services/auth.service';
+
+
 
 @Component({
   selector: 'app-register',
@@ -11,9 +13,12 @@ import { AuthService } from './../services/auth.service';
 
 })
 export class RegisterComponent implements OnInit {
+  private emailPattern: any = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   registerForm = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    
+
+    email: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(this.emailPattern)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
   constructor(private authSvc: AuthService, private router: Router) { }
 
@@ -41,4 +46,7 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/register']);
     }
   }
+ 
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
 }
