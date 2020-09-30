@@ -17,13 +17,12 @@ import { CanAdminGuard } from './auth/guards/can-admin.guard';
 import { CanSuscriptorGuard } from './auth/guards/can-suscriptor.guard';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SendEmailComponent,
-    
-   
     
   ],
   imports: [
